@@ -1,72 +1,58 @@
 
+const ErrorResponse = require('../utils/errorResponse');
+const asyncHandler = require('../middleware/async');
 const Security = require('../models/Security');
-exports.getSecurities = async (req, res, next) => {
-  try {
+exports.getSecurities = asyncHandler(async (req, res, next) => {
+
     const securities = await Security.find();
 
     res.status(200).json({success: true, count: securities.length, data: securities})
-  } catch (err) {
-    res.status(400).json({success: false});
-  }
-};
 
-exports.getSecurity = async (req, res, next) => {
-  try {
+});
+
+exports.getSecurity = asyncHandler(async (req, res, next) => {
+ 
     const security = await Security.findById(req.params.id);
 
     if(!security){
-      return res.status(400).json({success: false});
+      return next(new ErrorResponse(`Security not found with id of ${req.params.id}`, 404));
+
     }
 
     res.status(200).json({success: true, data: security})
-  } catch (err) {
-    res.status(400).json({success: false});
-  }
-};
+ 
+});
 
-exports.createSecurity = async (req, res, next) => {
-  try{
+exports.createSecurity = asyncHandler(async (req, res, next) => {
     const security = await Security.create(req.body);
 
     res.status(201).json({
       success: true,
       data: security
     })
-  } catch (err){
-    res.status(400).json({success:false})
-  }
-};
-exports.updateSecurity = async (req, res, next) => {
-    try {
+  
+});
+exports.updateSecurity = asyncHandler(async (req, res, next) => {
       const security = await Security.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidors: true
       });
   
       if(!security){
-        return res.status(400).json({success: false});
+        return next(new ErrorResponse(`Security not found with id of ${req.params.id}`, 404));
       }
   
       res.status(200).json({success: true, data: security})
-    } catch (err) {
-    res.status(400).json({success:false})
-      
-    }
     
-  };
-  exports.deleteSecurity = async (req, res, next) => {
-    try {
+  });
+  exports.deleteSecurity = asyncHandler(async (req, res, next) => {
       const security = await Security.findByIdAndDelete(req.params.id);
   
       if(!security){
-        return res.status(400).json({success: false});
+        return next(new ErrorResponse(`Security not found with id of ${req.params.id}`, 404));
       }
   
       res.status(200).json({success: true,  data: {}})
-    } catch (err) {
-    res.status(400).json({success:false})
-      
-    }
     
-  };
+  });
     
