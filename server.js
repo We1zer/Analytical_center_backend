@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const colors = require('colors');
 const logger = require("./middleware/logger");
 const connectDB = require('./config/db');
-
+const errorHandler = require('./middleware/error')
 //Load env vars
 dotenv.config({path: './config/config.env'});
 
@@ -21,8 +21,10 @@ app.use(express.json())
 
 app.use(logger);
 //Mout routers
-app.use('/api/v1/securities', security)
-app.use('/api/v1/security', security)
+app.use('/api/v1/securities', security);
+app.use('/api/v1/security', security);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
