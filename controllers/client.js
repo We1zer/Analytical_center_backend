@@ -38,7 +38,7 @@ exports.updateClient = asyncHandler(async (req, res, next) => {
       });
   
       if(!client){
-        return next(new ErrorResponse(`Security not found with id of ${req.params.id}`, 404));
+        return next(new ErrorResponse(`Client not found with id of ${req.params.id}`, 404));
       }
   
       res.status(200).json({success: true, data: client})
@@ -48,7 +48,7 @@ exports.updateClient = asyncHandler(async (req, res, next) => {
       const client = await Client.findByIdAndDelete(req.params.id);
   
       if(!client){
-        return next(new ErrorResponse(`Security not found with id of ${req.params.id}`, 404));
+        return next(new ErrorResponse(`Client not found with id of ${req.params.id}`, 404));
       }
   
       res.status(200).json({success: true,  data: {}})
