@@ -14,6 +14,8 @@ connectDB();
 const security = require('./routes/security');
 const client = require('./routes/client');
 const investment = require('./routes/investment');
+const quotation = require('./routes/quotationHistory');
+
 
 
 const app = express();
@@ -27,6 +29,7 @@ app.use('/api/v1/securities', security);
 app.use('/api/v1/security', security);
 app.use('/api/v1/client', client);
 app.use('/api/v1/investment', investment);
+app.use('/api/v1/quotation', quotation);
 
 app.use(errorHandler);
 
