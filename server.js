@@ -11,18 +11,20 @@ dotenv.config({path: './config/config.env'});
 connectDB();
 
 //Route files
-const security = require('./routes/security')
+const security = require('./routes/security');
+const client = require('./routes/client');
 
 
 const app = express();
  
 //Body parser
-app.use(express.json())
+app.use(express.json());
 
 app.use(logger);
 //Mout routers
 app.use('/api/v1/securities', security);
 app.use('/api/v1/security', security);
+app.use('/api/v1/client', client);
 
 app.use(errorHandler);
 
