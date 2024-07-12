@@ -3,8 +3,10 @@ const {getBankDeposits, createBankDeposit, getBankDeposit, updateBankDeposit, de
 
 const router = express.Router();
 
-router.route('/').get(getBankDeposits).post(createBankDeposit);
+const {protect, authorize} = require('../middleware/auth');
 
-router.route('/:id').get(getBankDeposit).put(updateBankDeposit).delete(deleteBankDeposit);
+router.route('/').get(getBankDeposits).post(protect, authorize('user','admin'), createBankDeposit);
+
+router.route('/:id').get(getBankDeposit).put(protect, authorize('user','admin'), updateBankDeposit).delete(protect, authorize('user','admin'), deleteBankDeposit);
 
 module.exports = router;

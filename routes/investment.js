@@ -3,8 +3,10 @@ const {getInvestments, createInvestment, getInvestment, updateInvestment, delete
 
 const router = express.Router();
 
-router.route('/').get(getInvestments).post(createInvestment);
+const {protect, authorize} = require('../middleware/auth');
 
-router.route('/:id').get(getInvestment).put(updateInvestment).delete(deleteInvestment);
+router.route('/').get(getInvestments).post(protect, authorize('user','admin'), createInvestment);
+
+router.route('/:id').get(getInvestment).put(protect, authorize('user','admin'), updateInvestment).delete(protect, authorize('user','admin'), deleteInvestment);
 
 module.exports = router;

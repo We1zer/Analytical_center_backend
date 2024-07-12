@@ -3,8 +3,10 @@ const {getQuotations, createQuotation, getQuotation, updateQuotation, deleteQuot
 
 const router = express.Router();
 
-router.route('/').get(getQuotations).post(createQuotation);
+const {protect, authorize} = require('../middleware/auth');
 
-router.route('/:id').get(getQuotation).put(updateQuotation).delete(deleteQuotation);
+router.route('/').get(getQuotations).post(protect, authorize('user','admin'), createQuotation);
+
+router.route('/:id').get(getQuotation).put(protect, authorize('user','admin'), updateQuotation).delete(protect, authorize('user','admin'), deleteQuotation);
 
 module.exports = router;
