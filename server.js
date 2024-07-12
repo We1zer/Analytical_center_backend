@@ -2,8 +2,9 @@ const express = require("express");
 const dotenv = require("dotenv");
 const colors = require('colors');
 const logger = require("./middleware/logger");
+const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
-const errorHandler = require('./middleware/error')
+const errorHandler = require('./middleware/error');
 //Load env vars
 dotenv.config({path: './config/config.env'});
 
@@ -16,6 +17,9 @@ const client = require('./routes/client');
 const investment = require('./routes/investment');
 const quotation = require('./routes/quotationHistory');
 const bankDeposit = require('./routes/bankDeposit');
+const auth = require('./routes/auth');
+const users = require('./routes/users');
+
 
 
 
@@ -23,6 +27,9 @@ const app = express();
  
 //Body parser
 app.use(express.json());
+
+// Cookie parser
+app.use(cookieParser());
 
 app.use(logger);
 //Mout routers
@@ -32,6 +39,9 @@ app.use('/api/v1/client', client);
 app.use('/api/v1/investment', investment);
 app.use('/api/v1/quotation', quotation);
 app.use('/api/v1/bankDeposit', bankDeposit);
+app.use('/api/v1/auth', auth);
+app.use('/api/v1/users', users);
+
 
 
 app.use(errorHandler);

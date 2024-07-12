@@ -3,8 +3,10 @@ const {getSecurities, createSecurity, getSecurity, updateSecurity, deleteSecurit
 
 const router = express.Router();
 
-router.route('/').get(getSecurities).post(createSecurity);
+const {protect, authorize} = require('../middleware/auth');
 
-router.route('/:id').get(getSecurity).put(updateSecurity).delete(deleteSecurity);
+router.route('/').get(getSecurities).post(protect, authorize('user','admin'), createSecurity);
+
+router.route('/:id').get(getSecurity).put(protect, authorize('admin'), updateSecurity).delete(protect, authorize('user','admin'), deleteSecurity);
 
 module.exports = router;
