@@ -25,6 +25,7 @@ const quotation = require('./routes/quotationHistory');
 const bankDeposit = require('./routes/bankDeposit');
 const auth = require('./routes/auth');
 const users = require('./routes/users');
+const recommendation = require('./routes/recommendation');
 
 
 
@@ -71,6 +72,7 @@ app.use('/api/v1/quotation', quotation);
 app.use('/api/v1/bankDeposit', bankDeposit);
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
+app.use('/api/v1/recommendation', recommendation);
 
 
 
