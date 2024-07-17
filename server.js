@@ -62,7 +62,6 @@ app.use(limiter);
 
 app.use(hpp());
 
-app.use(logger);
 //Mout routers
 app.use('/api/v1/securities', security);
 app.use('/api/v1/security', security);
