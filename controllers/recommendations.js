@@ -5,7 +5,7 @@ const Investment = require('../models/Investment');
 exports.getInvestmentRecommendations = asyncHandler(async (req, res, next) => {
     const recommendations = await Security.find({
         rating: { $gte: 4 },
-        annualYield: { $gte: 5 }
+        annualYield: { $gte: 3 }
     }).sort({ rating: -1, annualYield: -1 });
 
     res.status(200).json({ success: true, count: recommendations.length, data: recommendations });
